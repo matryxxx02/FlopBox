@@ -10,11 +10,18 @@ router.get(pathUrl, async (req, res) => {
   const { alias, path } = req.params;
   const collection = await db.getCollection<Server>("servers");
   const url = collection.findOne({ alias }).url as string;
-  console.log({ path, url });
-  // const clientFtp = new pathController(url, 21);
-  // clientFtp.connectToServer();
-  // const data = await clientFtp.downloadFile(path);
-  //res.setStatus(200).json(data);
+  const clientFtp = new pathController(url, 21);
+  await clientFtp.connectToServer();
+  try {
+    const data = await clientFtp.downloadFile(path);
+    res.setStatus(200).send(data);
+  } catch (err) {
+    if (err.code === 550) {
+      res.setStatus(404).json("file or directory not exist.");
+    } else {
+      res.setStatus(500).json("Internal error.");
+    }
+  }
 });
 
 router.post(pathUrl, (req, res) => {

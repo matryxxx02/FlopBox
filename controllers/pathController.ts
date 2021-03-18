@@ -10,13 +10,11 @@ export default class pathController {
     pass?: string,
     mode?: "active" | "passive",
   ) {
-    //init options if undefined
     this.client = new FTPClient(host, { port, user, pass, mode });
   }
 
   async connectToServer() {
     await this.client.connect();
-    console.log("Connected");
   }
 
   async downloadFile(path: string) {

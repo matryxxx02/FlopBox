@@ -6,7 +6,7 @@ import { opine, Router } from "./utils/deps.ts";
 const port = 8080;
 const app = opine();
 
-app.use("/servers", Path);
+app.use("/servers", Path, Servers);
 app.listen(port);
 
 console.log(`SERVER HOST ON PORT ${port} ✅`);
