@@ -3,8 +3,15 @@ import { FTPClient } from "../utils/deps.ts";
 export default class pathController {
   client: FTPClient;
 
-  constructor(host: string, port: number) {
-    this.client = new FTPClient(host, { port });
+  constructor(
+    host: string,
+    port: number,
+    user?: string,
+    pass?: string,
+    mode?: "active" | "passive",
+  ) {
+    //init options if undefined
+    this.client = new FTPClient(host, { port, user, pass, mode });
   }
 
   async connectToServer() {
@@ -28,15 +35,3 @@ export default class pathController {
     return await this.client.rm(path);
   }
 }
-
-// const client = new FTPClient("ftp.ubuntu.com");
-// await client.connect();
-// console.log("Connected");
-
-// console.log("Downloading...");
-// let file = await Deno.open("./5MB.ico", {
-//   create: true,
-//   write: true,
-// });
-// let stream = await client.downloadStream("/cdimage/favicon.ico");
-// await Deno.copy(stream, file);

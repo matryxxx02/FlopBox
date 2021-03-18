@@ -20,10 +20,10 @@ Servers :
 |POST		 |  `/`                         | Créer un nouveau server |
 |PUT		 |  `/{alias}`                  | Mettre à jour l'alias ou l'URL du server |
 |DELETE		 |  `/{alias}`        | Supprimer un Server de l'api |
-|GET		 |  `/{alias}/{filePath}`        | Télécharger un fichier ou un répertoire|
-|POST		 |  `/{alias}/{filePath}`        | Envoyer un nouveau fichier ou repertoire |
-|PUT		 |  `/{alias}/{filePath}`        | Modifier / Renommer un fichier ou un répertoire existant |
-|DELETE		 |  `/{alias}/{filePath}`        | Supprimer un fichier |
+|GET		 |  `/{alias}/{path}`        | Télécharger un fichier ou un répertoire|
+|POST		 |  `/{alias}/{path}`        | Envoyer un nouveau fichier ou repertoire |
+|PUT		 |  `/{alias}/{path}`        | Modifier / Renommer un fichier ou un répertoire existant |
+|DELETE		 |  `/{alias}/{path}`        | Supprimer un fichier |
 
 <br>
 
