@@ -24,24 +24,45 @@ router.get(pathUrl, async (req, res) => {
   }
 });
 
-router.post(pathUrl, (req, res) => {
+router.post(pathUrl, async (req, res) => {
+  const { alias, path } = req.params;
   console.log("PUSH NEW FILE");
   const file = req.body.file;
   console.log(file);
+  const collection = await db.getCollection<Server>("servers");
+  const url = collection.findOne({ alias }).url as string;
+  const clientFtp = new pathController(url, 21);
+  await clientFtp.connectToServer();
+  const data = await clientFtp.uploadFile(path, file);
+  console.log(data);
   res.setStatus(200).json({
     success: "true",
     data: "camarche",
   });
 });
 
-router.put(pathUrl, (req, res) => {
+router.put(pathUrl, async (req, res) => {
+  const { alias, path } = req.params;
+  const { newName } = req.body;
+  const collection = await db.getCollection<Server>("servers");
+  const url = collection.findOne({ alias }).url as string;
+  const clientFtp = new pathController(url, 21);
+  await clientFtp.connectToServer();
+  const data = await clientFtp.renameFile(path, newName);
   res.setStatus(200).json({
     success: "true",
     data: "camarche",
   });
 });
 
-router.delete(pathUrl, (req, res) => {
+router.delete(pathUrl, async (req, res) => {
+  const { alias, path } = req.params;
+  const collection = await db.getCollection<Server>("servers");
+  const url = collection.findOne({ alias }).url as string;
+  const clientFtp = new pathController(url, 21);
+  await clientFtp.connectToServer();
+  const data = await clientFtp.deleteFile(path);
+  console.log(data);
   res.setStatus(200).json({
     success: "true",
     data: "camarche",
